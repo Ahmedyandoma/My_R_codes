@@ -1,0 +1,28 @@
+install.packages("tseries")
+library(forecast)
+library(tseries)
+
+# Convert the data into a time series object
+# Assuming monthly data starting from january 2018
+incidence_data <- c(110794, 102391, 106919, 103638, 49229, 128219, 269008, 411394,
+                    385178, 552383, 279959, 169254, 145668, 169278, 182721, 173808,
+                    155571, 170532, 368300, 486240, 471719, 450110, 308575, 275318,
+                    211596, 218795, 263755, 267604, 187842, 200968, 275487, 334100,
+                    171087, 219649, 178587, 141893, 123866, 115520, 125547, 130662,
+                    117509, 130493, 147621, 252136, 289556, 282518, 216243, 273961,
+                    117394, 124019, 152740, 148600, 143149, 157307, 202220, 265875,
+                    279423, 280108, 220442, 170402, 135245, 136694, 148678, 154255,
+                    159902, 157867, 194145, 256962, 272568, 326971, 233246, 204690)
+# Plot the time series data to observe the trend and seasonality
+plot(incidence_data, type = "o", col = "blue", xlab = "Time", ylab = "Malaria Incidence", main = "Malaria Incidence in Kano State")
+
+# Test for stationary data using Augumented Dickey-Fuller Test
+adf.test(incidence_data)
+
+# Create a time series object from the data with start in 2018 and monthly frequency (12 months)
+malaria_ts <- ts(incidence_data, start = c(2018, 1), end = c(2023, 12), frequency = 12)
+
+malaria_ts
+
+# Decompose the time series to observe the trend, seasonal and random components
+decomposed_malaria_ts <- decompose(malaria_ts)
